@@ -1,12 +1,13 @@
 <template>
   <section class="msite">
     <header-top :title="address.name">
-      <span class="header_search" slot="left">
+      <router-link class="header_search" slot="left" to="/search">
         <i class="iconfont icon-search"></i>
-      </span>
-      <span class="header_login" slot="right">
-        <span class="header_login_text">登录|注册</span>
-      </span>
+      </router-link>>
+      <router-link class="header_login" slot="right"  :to="userInfo._id ? '/userinfo' : '/login'">
+        <span class="header_login_text" v-if="!userInfo._id">登录|注册</span>
+        <i class="iconfont icon-photo" v-else></i>
+      </router-link>>
     </header-top>
     <!--首页导航-->
     <nav class="msite_nav">
@@ -59,7 +60,7 @@ export default {
     this.$store.dispatch('getShops')
   },
   computed: {
-    ...mapState(['address', 'categorys']),
+    ...mapState(['address', 'categorys', 'userInfo']),
     categoryArr () {
       const categorys = this.categorys
       // 准备一个空的二位数组
@@ -99,6 +100,8 @@ export default {
   @import '../../common/stylus/mixins.styl'
   .msite
     width 100%
+    .icon-photo
+      font-size 27px
     .msite_nav
       bottom-border-1px(#e4e4e4)
       margin-top 45px
