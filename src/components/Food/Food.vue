@@ -34,16 +34,19 @@ export default {
   props: {
     food: Object
   },
+
   data () {
     return {
       isShow: false
     }
   },
+
   methods: {
     toggleShow () {
       this.isShow = !this.isShow
     }
   },
+
   components: {
     CartControl
   }
@@ -163,5 +166,4 @@ export default {
       left 0
       z-index 55
       background-color rgba(0, 0, 0, 0.5)
-
 </style>

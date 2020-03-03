@@ -9,11 +9,11 @@
 </template>
 
 <script>
-
 export default {
   props: {
     food: Object
   },
+
   methods: {
     updateFoodCount (isAdd) {
       this.$store.dispatch('updateFoodCount', {isAdd, food: this.food})

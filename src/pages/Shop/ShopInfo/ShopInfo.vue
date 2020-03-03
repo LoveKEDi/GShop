@@ -59,30 +59,28 @@
 import BScroll from 'better-scroll'
 import {mapState} from 'vuex'
 export default {
+
   data () {
     return {
-      supportClasses: ['activity-green', 'activity-orange', 'activity-red']
+      supportClasses: ['activity-green', 'activity-red', 'activity-orange']
     }
   },
   computed: {
     ...mapState(['info'])
   },
+
   mounted () {
-    // 如果数据还没有，直接结束
+    // 如果数据还没有, 直接结束
     if (!this.info.pics) {
       return
     }
-    this.initScroll()
+
+    // 数据有了, 可以创建BScroll对象形成滑动
+    this._initScroll()
   },
-  watch: {
-    info () { // 刷新流程，更新数据
-      this.$nextTick(() => {
-        this.initScroll()
-      })
-    }
-  },
+
   methods: {
-    initScroll () {
+    _initScroll () {
       // eslint-disable-next-line
       new BScroll('.shop-info')
       // 动态计算ul的宽度
@@ -94,6 +92,14 @@ export default {
       // eslint-disable-next-line
       new BScroll('.pic-wrapper', {
         scrollX: true // 水平滑动
+      })
+    }
+  },
+
+  watch: {
+    info () { // 刷新流程--> 更新数据
+      this.$nextTick(() => {
+        this._initScroll()
       })
     }
   }

@@ -44,19 +44,18 @@
 </template>
 
 <script>
-import BScroll from 'better-scroll'
-import CartControl from '../CartControl/CartControl.vue'
-import {mapState, mapGetters} from 'vuex'
 import { MessageBox } from 'mint-ui'
+import BScroll from 'better-scroll'
+import {mapState, mapGetters} from 'vuex'
+import CartControl from '../CartControl/CartControl.vue'
+
 export default {
   data () {
     return {
       isShow: false
     }
   },
-  components: {
-    CartControl
-  },
+
   computed: {
     ...mapState(['cartFoods', 'info']),
     ...mapGetters(['totalCount', 'totalPrice']),
@@ -70,21 +69,21 @@ export default {
       const {totalPrice} = this
       const {minPrice} = this.info
       if (totalPrice === 0) {
-        return `¥${minPrice}元起送`
+        return `￥${minPrice}元起送`
       } else if (totalPrice < minPrice) {
-        return `还差¥${minPrice - totalPrice}元起送`
+        return `还差￥${minPrice - totalPrice}元起送`
       } else {
         return '结算'
       }
     },
+
     listShow () {
-      // 如果cartFoods总数量为0，直接不显示
+      // 如果总数量为0, 直接不显示
       if (this.totalCount === 0) {
         // eslint-disable-next-line
         this.isShow = false
         return false
       }
-
       if (this.isShow) {
         this.$nextTick(() => {
           // 实现BScroll的实例是一个单例
@@ -94,13 +93,14 @@ export default {
               click: true
             })
           } else {
-            this.scroll.refresh() // 让滚动条刷新一下：重新统计内容的高度
+            this.scroll.refresh() // 让滚动条刷新一下: 重新统计内容的高度
           }
         })
       }
       return this.isShow
     }
   },
+
   methods: {
     toggleShow () {
       // 只有当总数量大于0时切换
@@ -108,11 +108,15 @@ export default {
         this.isShow = !this.isShow
       }
     },
+
     clearCart () {
       MessageBox.confirm('确定清空购物车吗?').then(action => {
         this.$store.dispatch('clearCart')
       }, () => {})
     }
+  },
+  components: {
+    CartControl
   }
 }
 </script>
@@ -280,9 +284,9 @@ export default {
     width 100%
     height 100%
     z-index 40
-    backdrop-filter blur(1px)
+    backdrop-filter blur(10px)
     opacity 1
-    background rgba(7, 17, 27, 0.3)
+    background rgba(7, 17, 27, 0.6)
     &.fade-enter-active, &.fade-leave-active
       transition all 0.5s
     &.fade-enter, &.fade-leave-to

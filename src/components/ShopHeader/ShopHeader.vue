@@ -2,7 +2,7 @@
   <div class="shop-header">
     <nav class="shop-nav" :style="{backgroundImage: `url(${info.bgImg})`}">
       <a class="back" @click="$router.back()">
-        <i class="iconfont icon-left-arrow"></i>
+        <i class="iconfont icon-arrow_left"></i>
       </a>
     </nav>
     <div class="shop-content" @click="toggleShopShow">
@@ -162,11 +162,12 @@ export default {
         position: absolute
         top: 10px
         left: 0
-        .icon-left-arrow
+        .icon-arrow_left
           display: block
           padding: 5px
           font-size: 20px
           color: #fff
+
     .shop-content
       padding 30px 20px 5px 20px
       position relative

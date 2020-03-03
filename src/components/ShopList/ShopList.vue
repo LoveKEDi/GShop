@@ -1,21 +1,24 @@
 <template>
   <div class="shop_container">
     <ul class="shop_list" v-if="shops.length">
-      <li class="shop_li border-1px" v-for="(shop,index) in shops" :key="index" @click="$router.push('/shop')">
+      <li class="shop_li border-1px" v-for="(shop, index) in shops"
+          :key="index" @click="$router.push('/shop')">
         <a>
           <div class="shop_left">
-            <img class="shop_img" :src="bassImgUrl + shop.image_path">
+            <img class="shop_img" :src="baseImgUrl+shop.image_path">
           </div>
           <div class="shop_right">
             <section class="shop_detail_header">
               <h4 class="shop_title ellipsis">{{shop.name}}</h4>
               <ul class="shop_detail_ul">
-                <li class="supports" v-for="(support, index) in shop.supports" :key="index">{{support.icon_name}}</li>
+                <li class="supports" v-for="(support, index) in shop.supports" :key="index">
+                  {{support.icon_name}}
+                </li>
               </ul>
             </section>
             <section class="shop_rating_order">
               <section class="shop_rating_order_left">
-                <star :score="shop.rating" :size="24"></star>
+                <Star :score="shop.rating" :size="24"/>
                 <div class="rating_section">
                   {{shop.rating}}
                 </div>
@@ -39,8 +42,7 @@
       </li>
     </ul>
     <ul v-else>
-      <!-- eslint-disable-next-line -->
-      <li v-for="item in 6">
+      <li v-for="item in 6" :key="item">
         <img src="./images/shop_back.svg" alt="back">
       </li>
     </ul>
@@ -50,10 +52,11 @@
 <script>
 import {mapState} from 'vuex'
 import Star from '../Star/Star.vue'
+
 export default {
   data () {
     return {
-      bassImgUrl: 'http://elm.cangdu.org/img/'
+      baseImgUrl: 'http://cangdu.org:8001/img/'
     }
   },
   computed: {
@@ -65,7 +68,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixins.styl"
   .shop_container
     margin-bottom 50px

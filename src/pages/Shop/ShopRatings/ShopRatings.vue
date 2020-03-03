@@ -36,7 +36,7 @@
             满意<span class="count">{{positiveSize}}</span>
           </span>
           <span class="block negative" :class="{active: selectType===1}" @click="setSelectType(1)">
-            不满意<span class="count">{{ratings.length - positiveSize}}</span>
+            不满意<span class="count">{{ratings.length-positiveSize}}</span>
           </span>
         </div>
         <div class="switch" :class="{on: onlyShowText}" @click="toggleOnlyShowText">
@@ -77,53 +77,61 @@ import {mapState, mapGetters} from 'vuex'
 import Star from '../../../components/Star/Star.vue'
 
 export default {
+
   data () {
     return {
-      onlyShowText: true, // 是否只显示有文本内容的
-      selectType: 2 // 选择的评价类型：0满意，1不满意，2全部
-    }
-  },
-  components: {
-    Star
-  },
-  computed: {
-    ...mapState(['info', 'ratings']),
-    ...mapGetters(['positiveSize']),
-    filterRatings () {
-      // 得到相关的数据
-      const {ratings, onlyShowText, selectType} = this
-      // 产生一个一个过滤新数组
-      return ratings.filter(rating => {
-        const {rateType, text} = rating
-        /*
-          条件1:
-            selectType:0/1/2
-            rateType:0/1
-            selectType === 2 || selectType === rateType
-          条件2:
-            onlyShowText:true/false
-            text:有值/没值
-            !onlyShowText || text.length > 0
-        */
-        return (selectType === 2 || selectType === rateType) && (!onlyShowText || text.length > 0)
-      })
-    }
-  },
-  methods: {
-    setSelectType (type) {
-      this.selectType = type
-    },
-    toggleOnlyShowText () {
-      this.onlyShowText = !this.onlyShowText
+      onlyShowText: true, // 是否只显示有文本的
+      selectType: 2 // 选择的评价类型: 0满意, 1不满意, 2全部
     }
   },
   mounted () {
     this.$store.dispatch('getShopRatings', () => {
       this.$nextTick(() => {
         // eslint-disable-next-line
-        new BScroll(this.$refs.ratings)
+        new BScroll(this.$refs.ratings, {
+          click: true
+        })
       })
     })
+  },
+
+  computed: {
+    ...mapState(['info', 'ratings']),
+    ...mapGetters(['positiveSize']),
+
+    filterRatings () {
+      // 得到相关的数据
+      const {ratings, onlyShowText, selectType} = this
+
+      // 产生一个过滤新数组
+      return ratings.filter(rating => {
+        const {rateType, text} = rating
+        /*
+          条件1:
+              selectType: 0/1/2
+              rateType: 0/1
+              selectType===2 || selectType===rateType
+          条件2
+              onlyShowText: true/false
+              text: 有值/没值
+              !onlyShowText || text.length>0
+         */
+        return (selectType === 2 || selectType === rateType) && (!onlyShowText || text.length > 0)
+      })
+    }
+  },
+
+  methods: {
+    setSelectType (selectType) {
+      this.selectType = selectType
+    },
+    toggleOnlyShowText () {
+      this.onlyShowText = !this.onlyShowText
+    }
+  },
+
+  components: {
+    Star
   }
 }
 </script>
